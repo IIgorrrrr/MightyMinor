@@ -1,3 +1,3 @@
-# MightyMiner
-This is MightyMiner, leading open-source skyblock mining helper
-[Join our discord](https://discord.gg/aKvpZhjxy8)
+# YOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
+TIS A FORK OF MIGHTY MINER MIGHTY MINOR YOU SEE WHAT I DID THER ELAMOAMALMLAMLMAMOAMO ALMAMLAMOAMOAMLOALMOAMOLAMOLAMLAMOLMLOA
