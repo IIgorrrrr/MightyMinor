@@ -405,7 +405,7 @@ public class AOTVMacro extends Macro {
                         tping = false;
                         currentState = State.MINING;
                     } else if (!BlockUtils.getPlayerLoc().down().equals(waypoint) && tpStuckTimer.hasReached(2500)) {
-                        LogUtils.addMessage("AOTV Macro -Et ole validi waypoint");
+                        LogUtils.addMessage("AOTV Macro - Et ole validi waypoint");
                         tping = false;
                         tpStuckTimer.reset();
                     }
@@ -449,13 +449,13 @@ public class AOTVMacro extends Macro {
                         if (firstTp) firstTp = false;
                     } else {
                         if (tpStuckTimer.hasReached(2000) && rotation.completed) {
-                            LogUtils.addMessage("AOTV Macro - Reitti ei ole selvä. Palikka: " + movingObjectPosition.getBlockPos().toString() + " is on the way.");
+                            LogUtils.addMessage("AOTV Macro - Reitti ei ole selvä. Palikka: " + movingObjectPosition.getBlockPos().toString() + " on autotiellä :D");
                             this.toggle();
                             break;
                         }
                     }
                 } else if (movingObjectPosition != null) {
-                    LogUtils.addMessage("AOTV Macro - VITTU JOTAIN ON TIELL*");
+                    LogUtils.addMessage("AOTV Macro - VITTU JOTAIN ON TIELLÄ");
                     this.toggle();
                 }
                 break;
