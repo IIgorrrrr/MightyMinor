@@ -82,7 +82,7 @@ public class GemstoneMacro extends Macro {
 
         pickaxe = PlayerUtils.getItemInHotbar(false, "Pick", "Gauntlet", "Drill");
         if (pickaxe == -1) {
-            LogUtils.debugLog("No Pickaxe");
+            LogUtils.debugLog("PICKAXE INVENTORIIN :DD:D:D:D::D:D:D:D:D:D:D:DDD");
             MacroHandler.disableScript();
             return;
         }
