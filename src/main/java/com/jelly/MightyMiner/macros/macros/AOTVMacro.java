@@ -381,7 +381,7 @@ public class AOTVMacro extends Macro {
                             reScan = false;
                             return;
                         }
-                        LogUtils.addMessage("No gemstones left. Teleporting to next vein");
+                        LogUtils.addMessage("Gemit loppuivat:(, siirrytään seuraavaan");
                         if (currentWaypoint == Waypoints.size() - 1) {
                             currentWaypoint = 0;
                         } else {
@@ -405,7 +405,7 @@ public class AOTVMacro extends Macro {
                         tping = false;
                         currentState = State.MINING;
                     } else if (!BlockUtils.getPlayerLoc().down().equals(waypoint) && tpStuckTimer.hasReached(2500)) {
-                        LogUtils.addMessage("AOTV Macro - You are not at a valid waypoint!");
+                        LogUtils.addMessage("AOTV Macro -Et ole validi waypoint");
                         tping = false;
                         tpStuckTimer.reset();
                     }
@@ -414,8 +414,8 @@ public class AOTVMacro extends Macro {
 
 
                 if (MightyMiner.config.aotvTeleportThreshold > 0) {
-                    if (!firstTp && !timeBetweenLastWaypoint.hasReached((long) (MightyMiner.config.aotvTeleportThreshold * 1000))) {
-                        LogUtils.addMessage("AOTV Macro - You are warping too fast! Probably veins didn't respawn in time. Waiting 10 seconds.");
+                    if (!firstTp && !timeBetweenLastWaypoint.hasReached((long) (MightyMiner.config.aotvTeleportThreshold * 1500))) {
+                        LogUtils.addMessage("AOTV Macro - Olet liian nopea. LISÄÄ MALMIA");
                         waitForVeinsTimer.reset();
                         tooFastTp = true;
                         return;
@@ -442,20 +442,20 @@ public class AOTVMacro extends Macro {
                 if (movingObjectPosition != null && movingObjectPosition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
                     if (movingObjectPosition.getBlockPos().equals(waypoint)) {
                         mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
-                        LogUtils.addMessage("AOTV Macro - Teleported to waypoint " + currentWaypoint);
+                        LogUtils.addMessage("AOTV Macro - Sinut siirrettin kohteeseen" + currentWaypoint + "MINE MORE");
                         tping = true;
                         timeBetweenLastWaypoint.reset();
                         tpStuckTimer.reset();
                         if (firstTp) firstTp = false;
                     } else {
                         if (tpStuckTimer.hasReached(2000) && rotation.completed) {
-                            LogUtils.addMessage("AOTV Macro - Path is not cleared. Block: " + movingObjectPosition.getBlockPos().toString() + " is on the way.");
+                            LogUtils.addMessage("AOTV Macro - Reitti ei ole selvä. Palikka: " + movingObjectPosition.getBlockPos().toString() + " is on the way.");
                             this.toggle();
                             break;
                         }
                     }
                 } else if (movingObjectPosition != null) {
-                    LogUtils.addMessage("AOTV Macro - Something is on the way!");
+                    LogUtils.addMessage("AOTV Macro - VITTU JOTAIN ON TIELL*");
                     this.toggle();
                 }
                 break;
