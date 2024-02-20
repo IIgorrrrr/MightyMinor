@@ -108,7 +108,8 @@ public class PowderMacro extends Macro {
                     rotationYawAxis += closestObstaclesLeftOrRight(20, caveBlocks) == 1 ? 90 : -90;
                     rotationYawAxis = get360RotationYaw(rotationYawAxis);
                 }
-
+                BlockPos CheckAimPos = mc.objectMouseOver.getBlockPos();
+                if (getBlock(CheckAimPos).equals(Blocks.chest)) currentState = State.TREASURE_SOLVE;
                 break;
 
             case TREASURE_WALK:
@@ -137,12 +138,19 @@ public class PowderMacro extends Macro {
                 if(mc.objectMouseOver == null || mc.objectMouseOver.getBlockPos() == null)
                     return;
 
+                if (MightyMiner.config.powSwitch){
+                    while (mc.thePlayer.inventory.currentItem == 1) mc.thePlayer.inventory.currentItem = 2; // makes sure that it actually switches to 2nd slot before opening chest
+                }
                 BlockPos aimPos = mc.objectMouseOver.getBlockPos();
                 double chestDistance = MathUtils.getDistanceBetweenTwoPoints(mc.thePlayer.posX, mc.thePlayer.posY + 1.62D, mc.thePlayer.posZ,
                         targetChest.getX() + 0.5D, targetChest.getY() + 0.5D, targetChest.getZ() + 0.5D);
                 double aimDistance = MathUtils.getDistanceBetweenTwoPoints(mc.thePlayer.posX, mc.thePlayer.posY + 1.62D, mc.thePlayer.posZ,
                         aimPos.getX() + 0.5D, aimPos.getY() + 0.5D, aimPos.getZ() + 0.5D);
                 KeybindHandler.setKeyBindState(KeybindHandler.keybindAttack, aimDistance < chestDistance && !getBlock(aimPos).equals(Blocks.chest));
+
+                if (MightyMiner.config.powSwitch){
+                    while (mc.thePlayer.inventory.currentItem == 2) mc.thePlayer.inventory.currentItem = 1; // makes sure that it actually switches back to first slot
+                }
                 break;
 
         }

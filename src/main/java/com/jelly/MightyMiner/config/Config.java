@@ -126,6 +126,10 @@ public class Config extends cc.polyfrost.oneconfig.config.Config {
     @Switch(name = "Switch to blue cheese drill when solving chest", description = "Gives more powder, but make sure you have a blue cheese drill in your hotbar", category = POWDER_MACRO, subcategory = "Miscellaneous")
     public boolean powBlueCheeseSwitch = true;
 
+    // @VigilanceName(name = "Switch to blue cheese drill when solving chest", category = POWDER_MACRO, subcategory = "Miscellaneous")
+    @Switch(name = "Switch to 2nd slot when opening powder chest", description = "Useful if you dont have blue cheese drill and want to switch to 2nd slot to get more powder", category = POWDER_MACRO, subcategory = "Miscellaneous")
+    public boolean powSwitch = true;
+
     @VigilanceName(name = "Center to block", category = POWDER_MACRO, subcategory = "Miscellaneous")
     @Switch(name = "Center to block", description = "Center to the middle of block using AOTE or AOTV when necessary. Please turn this on if you're not using nuker.", category = POWDER_MACRO, subcategory = "Miscellaneous")
     public boolean powCenter = false;
