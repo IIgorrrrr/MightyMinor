@@ -15,6 +15,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import com.jelly.MightyMiner.MightyMiner;
 import com.jelly.MightyMiner.config.aotv.AOTVWaypointsStructs;
+import com.jelly.MightyMiner.waypoints.Waypoint;
 import kotlin.Triple;
 import kotlinx.serialization.Serializable;
 import lombok.Getter;
@@ -281,6 +282,17 @@ public class AOTVWaypointsPage extends Page {
             });
             route.shareButton = shareButton;
 
+            BasicButton sortButton = new BasicButton(80, BasicButton.SIZE_36, "Sort", null, null, BasicButton.ALIGNMENT_CENTER, ColorPalette.PRIMARY);
+            sortButton.setClickAction(() -> {
+                int i = 1;
+                for (AOTVWaypointsStructs.Waypoint waypoint : list.waypoints) {
+                    waypoint.name = String.valueOf(i);
+                    i += 1;
+                redrawRoutes();
+                }
+            });
+            route.sortButton = sortButton;
+
             routes.add(route);
         }
     }
@@ -308,6 +320,7 @@ public class AOTVWaypointsPage extends Page {
             list.deleteButton.draw(vg, x + 1008 - 80 - 90, iY + 6, inputHandler);
 
             list.shareButton.draw(vg, x + 1008 - 80 - 90 - 90, iY + 6, inputHandler);
+            list.sortButton.draw(vg, x + 1008 - 80 - 90 - 90 - 90, iY + 6, inputHandler);
 
             if (list.showCoords) {
                 int i = 0;
@@ -444,6 +457,7 @@ public class AOTVWaypointsPage extends Page {
         public BasicButton expandButton;
         public BasicButton deleteButton;
         public BasicButton shareButton;
+        public BasicButton sortButton;
 
         public Route(String name) {
             this.name = name;
