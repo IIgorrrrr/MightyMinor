@@ -378,7 +378,7 @@ public class Config extends cc.polyfrost.oneconfig.config.Config {
 
 
     public Config() {
-        super(new Mod("Mighty Miner", ModType.HYPIXEL, new VigilanceMigrator("mightyminer.toml")), "/mightyminer/config.json");
+        super(new Mod("Mighty Miner", ModType.HYPIXEL, "/mightyminer/assets/icon.png", new VigilanceMigrator("mightyminer.toml")), "/mightyminer/config.json");
         initialize();
 
         this.addDependency("playerRad", "playerFailsafe");
