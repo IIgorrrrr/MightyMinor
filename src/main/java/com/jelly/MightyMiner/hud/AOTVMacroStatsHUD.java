@@ -15,14 +15,15 @@ public class AOTVMacroStatsHUD extends TextHud {
 
     @Override
     protected void getLines(List<String> lines, boolean example) {
-        if (example) {
+        if (!MacroHandler.macros.get(3).isEnabled()) {
             String[] exampleLines = new String[]{
-                    "§l Statistika mai fren:",
+                    "§l§4Aotv Makro:",
                     "§rThis shit has been running for: §f" + "0",
-                    "§rTODO HIHIHAHAHSAHH: §f" + "0/h",
+                    "§rwaypoints visited: §f" + "0",
+                    "§rwaypoints visited / h: §f" + "0",
             };
             lines.addAll(Arrays.asList(exampleLines));
-        } else if (MacroHandler.macros.get(3).isEnabled()) {
+        } else {
             String[] AOTVMacroLines = AOTVMacro.drawInfo();
             lines.addAll(Arrays.asList(AOTVMacroLines));
         }

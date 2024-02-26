@@ -37,6 +37,7 @@ public class AOTVMacro extends Macro {
 
     private final Timer tpStuckTimer = new Timer();
     private static final Timer runTimer = new Timer();
+    private static int waypointsVisited = 1;
     private final Timer timeBetweenLastWaypoint = new Timer();
     private final Timer waitForVeinsTimer = new Timer();
     private boolean tooFastTp = false;
@@ -445,6 +446,7 @@ public class AOTVMacro extends Macro {
                     if (movingObjectPosition.getBlockPos().equals(waypoint)) {
                         mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getHeldItem());
                         LogUtils.addMessage("AOTV Macro - Sinut siirrettin kohteeseen" + currentWaypoint + "MINE MORE");
+                        waypointsVisited += 1;
                         tping = true;
                         timeBetweenLastWaypoint.reset();
                         tpStuckTimer.reset();
@@ -475,10 +477,12 @@ public class AOTVMacro extends Macro {
     public static String[] drawInfo() {
         float runTimeInH = (float) (((float) runTimer.getTime()) / (3.6f * Math.pow(10, 6)));
         float time = (float) (((float) Math.round(runTimeInH * 100.0f)) / 100.0f);
+        double waypointsPerHour = (double) Math.round(waypointsVisited / runTimeInH * 100) / 100;
         return new String[] {
-                "§l Statistika mai fren:",
+                "§l§aAotv Makro",
                 "§rThis shit has been running for: §f" + time,
-                "§TODO HIHIHAHAHSAHH: §f" + "69",
+                "§rwaypoints visited: §f" + waypointsVisited,
+                "§rwaypoints visited / h: §f" + waypointsPerHour,
         };
     }
     private BaritoneConfig getAutoMineConfig() {
