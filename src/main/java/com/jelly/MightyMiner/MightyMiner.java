@@ -10,7 +10,9 @@ import com.jelly.MightyMiner.config.aotv.AOTVWaypointsStructs;
 import com.jelly.MightyMiner.features.*;
 import com.jelly.MightyMiner.handlers.KeybindHandler;
 import com.jelly.MightyMiner.handlers.MacroHandler;
+import com.jelly.MightyMiner.remote.DiscordBotMain;
 import com.jelly.MightyMiner.utils.HypixelUtils.SkyblockInfo;
+import com.jelly.MightyMiner.utils.TickTask;
 import com.jelly.MightyMiner.waypoints.WaypointHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -18,10 +20,14 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -29,6 +35,7 @@ import java.util.Locale;
 
 @Mod(name = "MightyMiner", modid = MightyMiner.MODID, version = MightyMiner.VERSION)
 public class MightyMiner {
+    public static TickTask tickTask;
     public static final String MODID = "mightyminer";
     public static final String VERSION = "1.0";
     public static Gson gson;
@@ -84,6 +91,7 @@ public class MightyMiner {
 
         if(System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH).contains("mac") || System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH).contains("darwin"))
             registerInitNotification();
+        MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new DrawBox());
         MinecraftForge.EVENT_BUS.register(new MacroHandler());
         MinecraftForge.EVENT_BUS.register(new WaypointHandler());
@@ -96,6 +104,7 @@ public class MightyMiner {
         MinecraftForge.EVENT_BUS.register(new AOTVWaypointsCommands());
         MinecraftForge.EVENT_BUS.register(new PlayerESP());
         MinecraftForge.EVENT_BUS.register(new PingAlert());
+        MinecraftForge.EVENT_BUS.register(new DiscordBotMain());
         KeybindHandler.initializeCustomKeybindings();
         MacroHandler.initializeMacro();
 
@@ -116,6 +125,13 @@ public class MightyMiner {
             trayIcon.displayMessage("Farm Helper Failsafe Notification", "Register Notifications", TrayIcon.MessageType.INFO);
             SystemTray.getSystemTray().remove(trayIcon);
         }).start();
+    }
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public final void tick(TickEvent.ClientTickEvent event) throws IOException {
+        if (tickTask != null) {
+            tickTask.onTick();
+        }
+        if (event.phase != TickEvent.Phase.START) return;
     }
 
 }

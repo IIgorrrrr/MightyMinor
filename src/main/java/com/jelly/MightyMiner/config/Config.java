@@ -26,6 +26,7 @@ public class Config extends cc.polyfrost.oneconfig.config.Config {
     private transient static final String FAILSAFES = "Failsafes";
     private transient static final String ADDONS = "Addons";
 
+    private transient static final String REMOTE = "Remote";
 
     //endregion
 
@@ -385,6 +386,11 @@ public class Config extends cc.polyfrost.oneconfig.config.Config {
     @Switch(name = "Fake movements when being staff checked", description = "You could disable this if you're always by your computer", category = FAILSAFES, subcategory = "Miscellaneous")
     public boolean fakeMovements = true;
 
+    @Switch(name = "Enable discord bot", description = "Enable remote control bot", category = REMOTE)
+    public boolean enableBot = false;
+
+    @Text(name = "Bot Token", description = "Token for bot", category = REMOTE)
+    public String botToken = "";
 
     public Config() {
         super(new Mod("Mighty Miner", ModType.HYPIXEL, "/mightyminer/assets/icon.png", new VigilanceMigrator("mightyminer.toml")), "/mightyminer/config.json");

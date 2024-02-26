@@ -1,5 +1,6 @@
 package com.jelly.MightyMiner.utils;
 
+import com.jelly.MightyMiner.MightyMiner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -14,6 +15,7 @@ import net.minecraft.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,6 +71,31 @@ public class InventoryUtils {
             return InventoryUtils.mc.thePlayer.openContainer.inventorySlots.get(slot).getStack();
         }
         return null;
+    }
+    public static int getSlotFromGui(final String itemName) {
+        List<ItemStack> inventory = mc.thePlayer.openContainer.getInventory();
+        for (ItemStack itemStack : inventory) {
+            if (itemStack == null) continue;
+            if (StringUtils.stripControlCodes(itemStack.getDisplayName()).toLowerCase().contains(itemName.toLowerCase())) {
+                return inventory.indexOf(itemStack);
+            }
+            if (inventory.indexOf(itemStack) >= (inventory.size() - 37)) break;
+        }
+        return -1;
+    }
+
+    public static String getLoreFromGuiByItemName(String name) {
+        if (!(mc.thePlayer.openContainer instanceof ContainerChest)) return null;
+        if (getSlotFromGui(name) == -1) return null;
+        if (getStackInOpenContainerSlot(getSlotFromGui(name)) == null) return null;
+        if (getLore(getStackInOpenContainerSlot(getSlotFromGui(name))) == null)
+            return null;
+        return StringUtils.stripControlCodes(Objects.requireNonNull(getLore(getStackInOpenContainerSlot(getSlotFromGui(name)))).toString());
+    }
+    public static void closeGuiAndUngrabMouse() {
+        if (mc.thePlayer.openContainer instanceof ContainerChest)
+            mc.thePlayer.closeScreen();
+        UngrabUtils.ungrabMouse();
     }
 
     public static int getSlotForItem(final String itemName) {
