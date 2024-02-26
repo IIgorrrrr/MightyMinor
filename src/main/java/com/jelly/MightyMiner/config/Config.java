@@ -343,6 +343,8 @@ public class Config extends cc.polyfrost.oneconfig.config.Config {
     @Color(name = "Player ESP color", category = ADDONS, subcategory = "PlayerESP")
     public OneColor playerESPColor = new OneColor(255, 0, 0, 120);
 
+    @Switch(name = "TEST BOX DRAW AVMOSDOMASOM", category = ADDONS, subcategory = "shit from hell")
+    public boolean drawBoxTest = false;
     @VigilanceName(name = "Enable Player detection failsafe", category = FAILSAFES, subcategory = "PlayerESP")
     @Switch(name = "Enable Player detection failsafe", description = "Stop macro if there is a player nearby", category = FAILSAFES, subcategory = "Player detection failsafe")
     public boolean playerFailsafe = true;

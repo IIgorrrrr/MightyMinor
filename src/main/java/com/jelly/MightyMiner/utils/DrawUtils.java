@@ -1,6 +1,7 @@
 package com.jelly.MightyMiner.utils;
 
 import cc.polyfrost.oneconfig.config.core.OneColor;
+import cc.polyfrost.oneconfig.libs.universal.UGraphics;
 import com.jelly.MightyMiner.MightyMiner;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -350,6 +351,23 @@ public class DrawUtils {
         drawText(str, X, Y, Z, false, 1.0f);
     }
 
+
+    public static void drawBox(double X, double Y) {
+        double renderPosX = X - Minecraft.getMinecraft().getRenderManager().viewerPosX;
+        double renderPosY = Y - Minecraft.getMinecraft().getRenderManager().viewerPosY;
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(renderPosX, renderPosY, 0);
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer renderer = tessellator.getWorldRenderer();
+        renderer.begin(7, DefaultVertexFormats.POSITION);
+        renderer.pos(1, -1, 0).endVertex();
+        renderer.pos(2 - 1, 8, 0).endVertex();
+        renderer.pos(4 + 1, 8, 0).endVertex();
+        renderer.pos(3 + 1, -1, 0).endVertex();
+
+        tessellator.draw();
+        GlStateManager.popMatrix();
+    }
     public static void drawText(String str, double X, double Y, double Z, boolean showDistance, float lScale) {
         FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
 
@@ -376,7 +394,6 @@ public class DrawUtils {
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
 
         int textWidth = fontRenderer.getStringWidth(StringUtils.stripControlCodes((str)));
-
         float j = textWidth / 2f;
         GlStateManager.disableTexture2D();
         Tessellator tessellator = Tessellator.getInstance();

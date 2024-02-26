@@ -30,7 +30,6 @@ public class PlayerESP {
             if (player.getDistanceToEntity(mc.thePlayer) > 50) continue;
 
             DrawUtils.drawEntity(player, MightyMiner.config.playerESPColor, 3, event.partialTicks);
-
             if (!PlayerUtils.entityIsVisible(player)) {
                 DrawUtils.drawText(player.getName(), player.posX, player.posY + player.height + 0.3, player.posZ, false, 0.7f);
             }

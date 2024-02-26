@@ -84,7 +84,7 @@ public class MightyMiner {
 
         if(System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH).contains("mac") || System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH).contains("darwin"))
             registerInitNotification();
-
+        MinecraftForge.EVENT_BUS.register(new DrawBox());
         MinecraftForge.EVENT_BUS.register(new MacroHandler());
         MinecraftForge.EVENT_BUS.register(new WaypointHandler());
         MinecraftForge.EVENT_BUS.register(new KeybindHandler());
