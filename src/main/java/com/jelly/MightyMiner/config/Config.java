@@ -9,6 +9,7 @@ import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator;
 import cc.polyfrost.oneconfig.config.migration.VigilanceName;
 import com.jelly.MightyMiner.gui.AOTVGemstoneFilter;
 import com.jelly.MightyMiner.gui.AOTVWaypointsPage;
+import com.jelly.MightyMiner.hud.AOTVMacroStatsHUD;
 import com.jelly.MightyMiner.hud.MobKillerHUD;
 import com.jelly.MightyMiner.hud.CommissionMacroHUD;
 
@@ -72,6 +73,8 @@ public class Config extends cc.polyfrost.oneconfig.config.Config {
     @Switch(name = "Debug mode", category = CORE, subcategory = "Macro", description = "Shows logs")
     public boolean debugLogMode = false;
 
+    @Switch(name = "Testing mode", category = CORE, subcategory = "Macro", description = "Allows testing for some shit basically removes checks so you can run macro outside of hypixel and with no requirements like for hud testin (doesnt work for most macros)") // nerd yapping
+    public boolean testingMode = false;
     @VigilanceName(name = "Toggle mouse ungrab", category = "Core", subcategory = "Macro")
     @Switch(name = "Toggle mouse ungrab", description = "May not work on some computers", category = CORE, subcategory = "Macro")
     public boolean mouseUngrab = false;
@@ -289,6 +292,10 @@ public class Config extends cc.polyfrost.oneconfig.config.Config {
     @VigilanceName(name = "Show distance to blocks", category = AOTV_MACRO, subcategory = "Drawings")
     @Switch(name = "Show distance to blocks", category = AOTV_MACRO, subcategory = "Drawings", size = 2)
     public boolean aotvShowDistanceToBlocks = true;
+
+
+    @HUD(name = "Aotv macro statistics", category = AOTV_MACRO, subcategory = "Drawings")
+    public AOTVMacroStatsHUD aotvMacroStatsHUD = new AOTVMacroStatsHUD();
 
     @VigilanceName(name = "MobKiller scan distance", category = ADDONS, subcategory = "MobKiller")
     @Slider( name = "MobKiller scan distance", category = ADDONS, subcategory = "MobKiller", max = 30, min = 1)

@@ -36,12 +36,13 @@ public class AOTVMacro extends Macro {
     private int currentWaypoint = -1;
 
     private final Timer tpStuckTimer = new Timer();
+    private static final Timer runTimer = new Timer();
     private final Timer timeBetweenLastWaypoint = new Timer();
     private final Timer waitForVeinsTimer = new Timer();
     private boolean tooFastTp = false;
     private boolean firstTp = true;
     private boolean tping = false;
-
+    private boolean testingMode = MightyMiner.config.testingMode;
     private boolean killing = false;
     private boolean refueling = false;
 
@@ -143,6 +144,8 @@ public class AOTVMacro extends Macro {
         baritone = new AutoMineBaritone(getAutoMineConfig());
         currentState = State.MINING;
         waitAfterKillTimer.reset();
+
+        runTimer.reset();
 
         pickaxe = PlayerUtils.getItemInHotbar(false, "Pick", "Gauntlet", "Drill");
         if (pickaxe == -1) {
@@ -470,7 +473,15 @@ public class AOTVMacro extends Macro {
         if (rotation.rotating)
             rotation.update();
     }
-
+    public static String[] drawInfo() {
+        float runTimeInH = (float) (((float) runTimer.getTime()) / (3.6f * Math.pow(10, 6)));
+        float time = (float) (((float) Math.round(runTimeInH * 100.0f)) / 100.0f);
+        return new String[] {
+                "§l Statistika mai fren:",
+                "§rThis shit has been running for: §f" + time,
+                "§TODO HIHIHAHAHSAHH: §f" + "69",
+        };
+    }
     private BaritoneConfig getAutoMineConfig() {
         return new BaritoneConfig(
                 MiningType.STATIC,
