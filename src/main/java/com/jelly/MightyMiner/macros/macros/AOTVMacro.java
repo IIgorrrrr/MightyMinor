@@ -42,7 +42,6 @@ public class AOTVMacro extends Macro {
     private boolean tooFastTp = false;
     private boolean firstTp = true;
     private boolean tping = false;
-    private boolean testingMode = MightyMiner.config.testingMode;
     private boolean killing = false;
     private boolean refueling = false;
 
