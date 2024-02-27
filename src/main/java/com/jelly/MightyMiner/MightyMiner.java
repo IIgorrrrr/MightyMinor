@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.jelly.MightyMiner.command.AOTVWaypointsCommands;
 import com.jelly.MightyMiner.command.BaritoneDebug;
 import com.jelly.MightyMiner.command.ExecuteBazaarSell;
+import com.jelly.MightyMiner.command.ExecuteBazaarSellKeybind;
 import com.jelly.MightyMiner.config.Config;
 import com.jelly.MightyMiner.config.aotv.AOTVWaypoints;
 import com.jelly.MightyMiner.config.aotv.AOTVWaypointsStructs;
@@ -104,6 +105,7 @@ public class MightyMiner {
         MinecraftForge.EVENT_BUS.register(new Autosell());
         MinecraftForge.EVENT_BUS.register(new Failsafes());
         MinecraftForge.EVENT_BUS.register(new AOTVWaypointsCommands());
+        MinecraftForge.EVENT_BUS.register(new ExecuteBazaarSellKeybind());
         MinecraftForge.EVENT_BUS.register(new PlayerESP());
         MinecraftForge.EVENT_BUS.register(new PingAlert());
         MinecraftForge.EVENT_BUS.register(new DiscordBotMain());

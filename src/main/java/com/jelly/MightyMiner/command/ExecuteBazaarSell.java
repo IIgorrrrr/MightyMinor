@@ -8,7 +8,7 @@ import net.minecraft.command.ICommandSender;
 public class ExecuteBazaarSell extends CommandBase {
     @Override
     public String getCommandName() {
-        return "kebabslayer";
+        return "bazaarautosell";
     }
     @Override
     public int getRequiredPermissionLevel() {
