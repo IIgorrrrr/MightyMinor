@@ -7,11 +7,13 @@ import cc.polyfrost.oneconfig.config.data.ModType;
 import cc.polyfrost.oneconfig.config.data.PageLocation;
 import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator;
 import cc.polyfrost.oneconfig.config.migration.VigilanceName;
+import com.jelly.MightyMiner.features.BazaarSell;
 import com.jelly.MightyMiner.gui.AOTVGemstoneFilter;
 import com.jelly.MightyMiner.gui.AOTVWaypointsPage;
 import com.jelly.MightyMiner.hud.AOTVMacroStatsHUD;
 import com.jelly.MightyMiner.hud.MobKillerHUD;
 import com.jelly.MightyMiner.hud.CommissionMacroHUD;
+import org.lwjgl.Sys;
 
 public class Config extends cc.polyfrost.oneconfig.config.Config {
 
@@ -25,6 +27,7 @@ public class Config extends cc.polyfrost.oneconfig.config.Config {
     private transient static final String COMMISSION_MACRO = "Commission macro";
     private transient static final String FAILSAFES = "Failsafes";
     private transient static final String ADDONS = "Addons";
+    private transient static final String AUTOSELL = "Autosell";
 
     private transient static final String REMOTE = "Remote";
 
@@ -295,7 +298,7 @@ public class Config extends cc.polyfrost.oneconfig.config.Config {
     public boolean aotvShowDistanceToBlocks = true;
 
 
-    @HUD(name = "Aotv macro statistics", category = AOTV_MACRO, subcategory = "Drawings")
+    @HUD(name = "Aotv macro statistics", category = AOTV_MACRO, subcategory = "HUD")
     public AOTVMacroStatsHUD aotvMacroStatsHUD = new AOTVMacroStatsHUD();
 
     @VigilanceName(name = "MobKiller scan distance", category = ADDONS, subcategory = "MobKiller")
@@ -391,6 +394,20 @@ public class Config extends cc.polyfrost.oneconfig.config.Config {
 
     @Text(name = "Bot Token", description = "Token for bot", category = REMOTE)
     public String botToken = "";
+
+    @Button(name = "bazaarslell test for now", text = "EXECUTE", category = ADDONS, subcategory = "shengangianigniaings")
+    Runnable runnable = () -> {
+        BazaarSell.enable();
+    };
+    @Slider(
+            name = "bazaar autosell delay",
+            min = 250, max = 1000,
+            step = 1,
+            category = AUTOSELL,
+            subcategory = "Values"
+    )
+    public int bazaarAutoSellDelay = 600;
+
 
     public Config() {
         super(new Mod("Mighty Miner", ModType.HYPIXEL, "/mightyminer/assets/icon.png", new VigilanceMigrator("mightyminer.toml")), "/mightyminer/config.json");

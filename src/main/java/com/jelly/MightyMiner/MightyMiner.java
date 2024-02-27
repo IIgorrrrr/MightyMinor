@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jelly.MightyMiner.command.AOTVWaypointsCommands;
 import com.jelly.MightyMiner.command.BaritoneDebug;
+import com.jelly.MightyMiner.command.ExecuteBazaarSell;
 import com.jelly.MightyMiner.config.Config;
 import com.jelly.MightyMiner.config.aotv.AOTVWaypoints;
 import com.jelly.MightyMiner.config.aotv.AOTVWaypointsStructs;
@@ -23,6 +24,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import scala.collection.parallel.ParIterableLike;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -105,11 +107,13 @@ public class MightyMiner {
         MinecraftForge.EVENT_BUS.register(new PlayerESP());
         MinecraftForge.EVENT_BUS.register(new PingAlert());
         MinecraftForge.EVENT_BUS.register(new DiscordBotMain());
+        MinecraftForge.EVENT_BUS.register(new DevFeatures());
+        MinecraftForge.EVENT_BUS.register(new BazaarSell());
         KeybindHandler.initializeCustomKeybindings();
         MacroHandler.initializeMacro();
 
         ClientCommandHandler.instance.registerCommand(new BaritoneDebug());
-
+        ClientCommandHandler.instance.registerCommand(new ExecuteBazaarSell());
         Minecraft.getMinecraft().gameSettings.gammaSetting = 100;
     }
 

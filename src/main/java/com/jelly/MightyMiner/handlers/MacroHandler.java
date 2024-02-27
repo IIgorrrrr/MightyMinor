@@ -13,6 +13,7 @@ import com.jelly.MightyMiner.utils.BlockUtils.BlockUtils;
 import com.jelly.MightyMiner.utils.HypixelUtils.SkyblockInfo;
 import com.jelly.MightyMiner.world.GameState;
 import com.mojang.realmsclient.gui.ChatFormatting;
+import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.*;
@@ -30,6 +31,7 @@ public class MacroHandler {
 
     public static boolean pickaxeSkillReady = true;
 
+    @Getter
     public static boolean enabled = false;
 
     public static boolean finishedCommission = false;
