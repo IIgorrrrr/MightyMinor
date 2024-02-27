@@ -116,7 +116,6 @@ public class BazaarSell {
                 waitTimer.reset();
                 break;
         }
-        waitTimer.reset();
 
     }
 
