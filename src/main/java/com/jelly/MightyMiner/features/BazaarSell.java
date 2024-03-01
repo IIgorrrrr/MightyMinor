@@ -8,6 +8,8 @@ import com.jelly.MightyMiner.utils.Timer;
 import com.jelly.MightyMiner.world.GameState;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -21,6 +23,8 @@ public class BazaarSell {
     public static final int delay = MightyMiner.config.bazaarAutoSellDelay;
     public static boolean hasAllBeenSold = false;
     public static boolean haveInvBeenSold = false;
+    public static boolean canSellSacks;
+    public static boolean canSellInv;
     private static final Timer waitTimer = new Timer();
     @Getter
     private static boolean enabled;
@@ -53,7 +57,6 @@ public class BazaarSell {
     }
 
     public static void disable() {
-        LogUtils.debugLog("[AutoSell] Finished auto sell");
         if (wasMacroEnabled) MacroHandler.startScript(MightyMiner.config.macroType);
         mc.thePlayer.closeScreen();
         mc.thePlayer.inventory.currentItem = originalSlot;
@@ -72,20 +75,30 @@ public class BazaarSell {
         if (!waitTimer.hasReached(delay)) {
             return;
         }
+        if (MightyMiner.config.autosellMode == 0) sellBZ();
+        else return;
+    }
+    public static void sellBZ() {
         switch (currentStateBZ) {
             case START:
-                if (mc.currentScreen == null) {
-                    currentStateBZ = StateBZ.OPEN_MENU;
-                } else if (InventoryUtils.getInventoryName() != null && InventoryUtils.getInventoryName().contains("Bazaar")) {
+                if (mc.currentScreen == null) currentStateBZ = StateBZ.OPEN_MENU;
+                else if (InventoryUtils.getInventoryName() != null && InventoryUtils.getInventoryName().contains("Bazaar"))
                     currentStateBZ = StateBZ.SELL_INV;
-                }
                 waitTimer.reset();
                 break;
             case OPEN_MENU:
                 mc.thePlayer.sendChatMessage("/bz");
                 log("ok guys we are officially in the bazaar menu yoo less go");
                 // lets go and sell some sacks guys
-                currentStateBZ = StateBZ.SELL_SACKS;
+                String lore = String.join(" ", InventoryUtils.getLoreFromGuiByItemName("Sell Inventory"));
+                canSellInv = !lore.contains("You don't have anything to sell!");
+                canSellSacks = !(InventoryUtils.getSlotFromGui("sell sacks") == -1);
+                if (canSellInv) currentStateBZ = StateBZ.SELL_INV;
+                if (canSellSacks) currentStateBZ = StateBZ.SELL_SACKS;
+                if (!canSellSacks && !canSellInv) currentStateBZ = StateBZ.CLOSE_MENU;
+                System.out.println("cansellinv : " + canSellInv);
+                System.out.println("cansellsacks : " + canSellSacks);
+                System.out.println(InventoryUtils.getSlotFromGui("sell sacks"));
                 waitTimer.reset();
                 break;
             case SELL_SACKS:
@@ -95,12 +108,16 @@ public class BazaarSell {
                 break;
             case SELL_INV_CONFIRM:
                 InventoryUtils.clickOpenContainerSlot(InventoryUtils.getSlotFromGui("Selling whole"));
-                currentStateBZ = StateBZ.CLOSE_MENU;
+                if (canSellSacks) currentStateBZ = StateBZ.SELL_SACKS;
+                else currentStateBZ = StateBZ.CLOSE_MENU;
+                canSellInv = false;
                 waitTimer.reset();
                 break;
             case SELL_SACKS_CONFIRM:
                 InventoryUtils.clickOpenContainerSlot(InventoryUtils.getSlotFromGui("Selling whole"));
-                currentStateBZ = StateBZ.SELL_INV;
+                if (canSellInv) currentStateBZ = StateBZ.SELL_INV;
+                else currentStateBZ = StateBZ.CLOSE_MENU;
+                canSellSacks = false;
                 waitTimer.reset();
                 break;
             case SELL_INV:
@@ -116,9 +133,7 @@ public class BazaarSell {
                 waitTimer.reset();
                 break;
         }
-
     }
-
 
 
     public static void log(String message) { LogUtils.addMessage(prefix + message); }

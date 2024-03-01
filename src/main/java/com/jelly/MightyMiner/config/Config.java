@@ -301,6 +301,8 @@ public class Config extends cc.polyfrost.oneconfig.config.Config {
     @HUD(name = "Aotv macro statistics", category = AOTV_MACRO, subcategory = "HUD")
     public AOTVMacroStatsHUD aotvMacroStatsHUD = new AOTVMacroStatsHUD();
 
+    @Dropdown(name = "Autosell Mode", options = {"Bazaar", "Npc"}, category = AUTOSELL, subcategory = "Values")
+    public int autosellMode = 0;
     @VigilanceName(name = "MobKiller scan distance", category = ADDONS, subcategory = "MobKiller")
     @Slider( name = "MobKiller scan distance", category = ADDONS, subcategory = "MobKiller", max = 30, min = 1)
     public int mobKillerScanRange = 10;
