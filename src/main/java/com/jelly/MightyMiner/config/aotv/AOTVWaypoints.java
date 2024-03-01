@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.minecraft.util.BlockPos;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,6 @@ public class AOTVWaypoints {
         WaypointLists.set(index, inner);
         return true;
     }
-
     public void removeCoord(AOTVWaypointsStructs.WaypointList wp, AOTVWaypointsStructs.Waypoint waypoint) {
         int index = WaypointLists.indexOf(wp);
         AOTVWaypointsStructs.WaypointList inner = WaypointLists.get(index);

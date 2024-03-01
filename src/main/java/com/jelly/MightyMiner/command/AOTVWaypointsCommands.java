@@ -6,6 +6,8 @@ import com.jelly.MightyMiner.config.aotv.AOTVWaypointsStructs;
 import com.jelly.MightyMiner.gui.AOTVWaypointsPage;
 import com.jelly.MightyMiner.utils.BlockUtils.BlockUtils;
 import com.jelly.MightyMiner.utils.LogUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -19,12 +21,14 @@ public class AOTVWaypointsCommands {
     private final KeyBinding keyBinding = new KeyBinding("Open Waypoints Settings", Keyboard.KEY_NEXT, "MightyMiner - Waypoints");
     private final KeyBinding keyBinding2 = new KeyBinding("Add current position to selected waypoint list", Keyboard.KEY_EQUALS, "MightyMiner - Waypoints");
     private final KeyBinding keyBinding3 = new KeyBinding("Delete current position from selected waypoint list", Keyboard.KEY_MINUS, "MightyMiner - Waypoints");
-
+    private final KeyBinding bringClosestWpHere = new KeyBinding("move the closest waypoint to my leggoriinos", Keyboard.KEY_P, "MightyMiner - Waypoints");
+    private final static Minecraft mc = Minecraft.getMinecraft();
 
     public AOTVWaypointsCommands() {
         ClientRegistry.registerKeyBinding(keyBinding);
         ClientRegistry.registerKeyBinding(keyBinding2);
         ClientRegistry.registerKeyBinding(keyBinding3);
+        ClientRegistry.registerKeyBinding(bringClosestWpHere);
     }
 
     @SubscribeEvent
@@ -37,6 +41,35 @@ public class AOTVWaypointsCommands {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        // sphagettios
+        if (bringClosestWpHere.isPressed()) {
+            if (MightyMiner.aotvWaypoints.getSelectedRoute() == null) return;
+            EntityPlayerSP player = mc.thePlayer;
+            AOTVWaypointsStructs.Waypoint closestWp = null;
+            for (AOTVWaypointsStructs.Waypoint wp : MightyMiner.aotvWaypoints.getSelectedRoute().waypoints) {
+                if (closestWp == null || mc.thePlayer.getDistanceSq(
+                        BlockUtils.getPlayerLoc().getX() - wp.x,
+                        BlockUtils.getPlayerLoc().getY() - wp.y,
+                        BlockUtils.getPlayerLoc().getZ() - wp.z) <
+                        mc.thePlayer.getDistanceSq(
+                                BlockUtils.getPlayerLoc().getX() - closestWp.x,
+                                BlockUtils.getPlayerLoc().getY() - closestWp.y,
+                                BlockUtils.getPlayerLoc().getZ() - closestWp.z)) {
+                    closestWp = wp;
+                }
+
+            }
+            if (closestWp != null) {
+                BlockPos playerPos = BlockUtils.getPlayerLoc().down();
+                closestWp.x = playerPos.getX();
+                closestWp.y = playerPos.getY();
+                closestWp.z = playerPos.getZ();
+            } else {
+                LogUtils.addMessage("WHAT ZA FUCK YOU PRESS KEY WHEN THERE ARE NO WAYPOINT YOU NAUGHTY LITTLE BOY (german accent)");
+            }
+            AOTVWaypointsStructs.SaveWaypoints();
+            AOTVWaypointsPage.redrawRoutes();
         }
         if (keyBinding2.isPressed()) {
             if (MightyMiner.aotvWaypoints.getSelectedRoute() == null) return;
