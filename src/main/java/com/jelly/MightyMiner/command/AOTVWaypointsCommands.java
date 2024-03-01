@@ -21,7 +21,7 @@ public class AOTVWaypointsCommands {
     private final KeyBinding keyBinding = new KeyBinding("Open Waypoints Settings", Keyboard.KEY_NEXT, "MightyMiner - Waypoints");
     private final KeyBinding keyBinding2 = new KeyBinding("Add current position to selected waypoint list", Keyboard.KEY_EQUALS, "MightyMiner - Waypoints");
     private final KeyBinding keyBinding3 = new KeyBinding("Delete current position from selected waypoint list", Keyboard.KEY_MINUS, "MightyMiner - Waypoints");
-    private final KeyBinding bringClosestWpHere = new KeyBinding("move the closest waypoint to my leggoriinos", Keyboard.KEY_P, "MightyMiner - Waypoints");
+    private final KeyBinding bringClosestWpHere = new KeyBinding("move the closest waypoint to my leggoriinos", Keyboard.KEY_L, "MightyMiner - Waypoints");
     private final static Minecraft mc = Minecraft.getMinecraft();
 
     public AOTVWaypointsCommands() {
