@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = "1.6.10"
+    ext.kotlin_version = "1.9.0"
     repositories {
         jcenter()
         maven {
@@ -94,7 +94,7 @@ dependencies {
     include(fileTree(dir: 'libs', include: '*.jar'))
     implementation(fileTree(dir: 'libs', include: '*.jar'))
 
-    compileOnly('cc.polyfrost:oneconfig-1.8.9-forge:0.2.0-alpha+')
+    compileOnly('cc.polyfrost:oneconfig-1.8.9-forge:0.2.2-alpha+')
     include('cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta+')
     implementation("me.djtheredstoner:DevAuth-forge-legacy:1.1.0")
 }
