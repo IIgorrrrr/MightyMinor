@@ -4,9 +4,11 @@ import com.jelly.MightyMiner.MightyMiner;
 import com.jelly.MightyMiner.handlers.MacroHandler;
 import com.jelly.MightyMiner.utils.Clock;
 import com.jelly.MightyMiner.utils.LogUtils;
+import com.jelly.MightyMiner.utils.NotificationHelper;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.utils.FileUpload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ScreenShotHelper;
@@ -17,6 +19,7 @@ import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -60,6 +63,10 @@ public class CommandListener extends ListenerAdapter {
                 embedBuilder.setColor(random);
 
                 event.getHook().sendMessageEmbeds(embedBuilder.build()).addFiles(FileUpload.fromData(Base64.getDecoder().decode(image), "image.png")).queue();
+                break;
+            case "notify":
+                NotificationHelper.notify(Objects.requireNonNull(event.getOption("text")).getAsString(), false);
+                event.reply("Funny shit done :)").queue();
                 break;
         }
     }

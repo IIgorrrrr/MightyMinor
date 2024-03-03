@@ -10,7 +10,9 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -57,7 +59,18 @@ public class DiscordBotMain {
                 .build();
         jda.awaitReady();
         jda.addEventListener(new CommandListener());
-        jda.updateCommands().addCommands(Commands.slash("ping", "Calculate ping of the bot"),Commands.slash("enablemacro", "Enable bot"),Commands.slash("disablemacro", "Disable bot"),Commands.slash("screenshot","Screenshot"))
+        jda.updateCommands().addCommands(
+                Commands.slash("ping", "Calculate ping of the bot"),
+                Commands.slash("enablemacro", "Enable bot"),
+                Commands.slash("disablemacro", "Disable bot"),
+                Commands.slash("screenshot","Screenshot"),
+                Commands.slash("notify","use this for funny shenanigans")
+                        .addOptions(
+                                new OptionData(
+                                        OptionType.STRING, "text", "type something :)", true
+                                )
+                        )
+                )
                 .queue();
     }
     private void shutdown(){
